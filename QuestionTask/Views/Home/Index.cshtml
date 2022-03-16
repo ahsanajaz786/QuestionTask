@@ -1,0 +1,58 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+  <table id="table" class="table table-bordered table-hover role-table">
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Type</th>
+                                   
+
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+
+
+@section scripts {
+        <script type="text/javascript">
+             var initGrid=function(){
+              //user-table
+               $('#table').DataTable( {
+         
+           "ajax": "",
+            processing: true,
+        search: {
+            return: true
+        },
+        serverSide: true,
+         "processing": true,
+        "serverSide": true,
+        "filter": true,
+        "ajax": {
+            "url": "/Question/Get",
+            "type": "GET",
+            "datatype": "json"
+        },
+        "columnDefs": [{
+            "visible": false,
+            "searchable": false
+        }],
+        "columns": [
+            { "data": "title", "name": "Question", "autoWidth": false },
+            { "data": "type", "name": "Type", "autoWidth": false },
+           
+           
+           
+        ]
+    } );
+          }
+            $(document).ready(function () {
+             initGrid()
+            
+            })
+
+            </script>
+}

@@ -1,0 +1,123 @@
+﻿@{
+    ViewData["Title"] = "Add Quesrion";
+}
+    <h1>Add Question</h1>
+    <div class="row">
+    <div class="col-md-6">
+         <div class="form-group">
+    <label for="exampleInputEmail1">Question Title</label>
+    <input type="text" class="form-control" id="question-title" aria-describedby="emailHelp" placeholder="Question Title">
+   </div>
+    </div>
+     <div class="col-md-6">
+         <div class="form-group">
+    <label for="exampleInputEmail1">Question Type</label>
+    <select class="form-control" id="option-select">
+        <option value="text">Text</option>
+        <option value="checkbox">CheckBok</option>
+        <option value="radio">Radio</option>
+
+    </select>
+        
+   </div>
+    </div>
+     
+    </div>
+    <div class="row">
+        
+         <div class="form-group d-none" id="container">
+             <span class='option-container'>
+          <label for="exampleInputEmail1">Option 1</label>
+          <input type="text" class="form-control" id="option-add-1" aria-describedby="emailHelp" placeholder="Question Title">
+              
+        </span>   
+      </div>
+    </div>
+    <div class="btn-container d-none">
+<button class="btn btn-primary" id="add-btn">Add</button>
+<button class="btn btn-danger" id="add-rm">Remove</button>
+</div>
+<div class="row">
+    <div class="col-md-12" style="
+    float: right;
+">
+    <button class="btn btn-primary pull-right" style="
+    float: right;
+" id="save-btn">Save</button>
+    </div>
+</div>
+
+
+@section scripts {
+        <script type="text/javascript">
+
+        $(document).ready(function () {
+           $('#option-select').change(function(){
+               let select=$('#option-select').val()
+               if(select!='text'){
+                   $('#container').removeClass('d-none')
+                   $('.btn-container').removeClass('d-none')
+
+               }else{
+                     $('.btn-container').addClass('d-none')
+                     $('#container').addClass('d-none')
+               }
+
+               $('#add-btn').click(function(){
+                   let cnt=+$('.option-container').length+1
+                   $('#container').append(`<span class='option-container'>
+          <label for="exampleInputEmail1">Option ${cnt}</label>
+          <input type="text" class="form-control" id="option-add-${cnt}" aria-describedby="emailHelp" placeholder="Option ${cnt}">
+            </span>`)
+               })
+           })
+           $('#add-rm').click(function(){
+               $('.option-container').last().remove()
+
+           })
+           $('#save-btn').click(function(){
+               let arry=[]
+                let select=$('#option-select').val()
+               if(select!='text'){
+                   for(var i=0;i<$('.option-container').length;i++){
+                       arry.push($(`.option-container #option-add-${i+1}`).val())
+                   }
+               
+               }
+               let obj={
+                   type:$('#option-select').val(),
+                   title:$('#question-title').val(),
+                   options:arry
+
+               }
+                
+        $.ajax({
+            type: "Post", //HTTP POST Method
+            url: '/Question/AddQuestion', // Controller/View,
+            data:obj,
+
+            success: function (response) {
+                if(response.errorCode==0)
+                {
+                    alert("Question Added")
+                    window.location = "/";
+                }
+                
+
+            },
+            error: function (response) {
+                 
+            }
+        });
+        
+
+
+           })
+
+
+        });
+
+    </script>
+
+
+}

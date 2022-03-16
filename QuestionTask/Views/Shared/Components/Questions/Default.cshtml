@@ -1,0 +1,67 @@
+﻿@using QuestionTask.Domain.DTO
+@model QuestionSubmittDTO 
+<div class="container">
+    <div class="question">
+        <form method="post" asp-action="SaveQuestionResult" asp-controller="Question">
+            <div class="row">
+                <div class="col-md-6">
+         <div class="form-group">
+    <label for="exampleInputEmail1">Full Name</label>
+    <input type="text" class="form-control" asp-for="FullName" id="question-title" aria-describedby="emailHelp" placeholder="Full Name">
+   </div>
+    </div>
+    <div class="col-md-6">
+         <div class="form-group">
+    <label for="exampleInputEmail1">Email</label>
+    <input type="text" class="form-control" asp-for="Email" id="question-title" aria-describedby="emailHelp" placeholder="Email">
+   </div>
+    </div>
+
+            </div>
+
+        @for(var item=0; item<Model.QuestionDTOs.Count;item++)
+            {
+        <div class="row">@Model.QuestionDTOs[item].Title</div>
+        <input type="hidden" asp-for="@Model.QuestionDTOs[item].Title"/>
+        <input type="hidden" asp-for="@Model.QuestionDTOs[item].Type"/>
+        <input type="hidden" asp-for="@Model.QuestionDTOs[item].Id"/>
+        
+            @if(Model.QuestionDTOs[item].Type=="text")
+                {
+                    <input type="text" asp-for="QuestionDTOs[item].Answer" class="form-control"/>
+                }
+                else if(Model.QuestionDTOs[item].Type=="checkbox")
+                {
+                    @for (int option= 0;option < Model.QuestionDTOs[item].QuestionOptions.Count;option++)
+                    {
+                       <input type="hidden" asp-for="QuestionDTOs[item].QuestionOptions[option].Id"/>
+                       <input type="hidden" asp-for="QuestionDTOs[item].QuestionOptions[option].Value"/>
+
+                        <input type="checkbox" value="true" asp-for="QuestionDTOs[item].QuestionOptions[option].Checked"  />@Model.QuestionDTOs[item].QuestionOptions[option].Value
+                        <br />
+                    }
+                }else if(Model.QuestionDTOs[item].Type=="radio")
+                {
+                     @for (int option= 0;option < Model.QuestionDTOs[item].QuestionOptions.Count;option++)
+                    {
+                        <input type="hidden" asp-for="QuestionDTOs[item].QuestionOptions[option].Id"/>
+                       <input type="hidden" asp-for="QuestionDTOs[item].QuestionOptions[option].Value"/>
+                        <input type="radio" value="@Model.QuestionDTOs[item].QuestionOptions[option].Id" asp-for="QuestionDTOs[item].Answer"  />@Model.QuestionDTOs[item].QuestionOptions[option].Value
+                        <br />
+                    }
+                }
+
+        }
+        <div class="row">
+            <div class="col-md-12">
+                <button class="btn btn-primary" style="float:right">Submit</button>
+
+            </div>
+
+
+        </div>
+        </form>
+
+    </div>
+
+</div>
