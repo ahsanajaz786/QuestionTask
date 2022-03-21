@@ -6,6 +6,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Text.Json;
+using Newtonsoft.Json;
+using QuestionTask.Domain.DTO;
 
 namespace QuestionTask.Controllers
 {
@@ -21,6 +24,27 @@ namespace QuestionTask.Controllers
         public IActionResult Index()
         {
             return View();
+        }
+        public async Task<IActionResult> RenderJsonQuestions()
+
+        {
+          
+            return View();
+        }
+        public IActionResult RenderJson(string json)
+        {
+            var question = new List<JsonQuestion>();
+
+            try
+            {
+                question = JsonConvert.DeserializeObject<List<JsonQuestion>>(json);
+            }
+            catch (Exception l)
+            {
+                ViewBag.error = "Invalid json";
+
+            }
+            return View(question);
         }
         public async Task<IActionResult> Users()
         {

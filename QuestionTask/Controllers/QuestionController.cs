@@ -28,6 +28,7 @@ namespace QuestionTask.Controllers
         }
         public async Task<IActionResult> RenderQuestionView()
         {
+          
             return View();
         }
         [HttpPost]
