@@ -12,3 +12,8 @@ step 6 :run the project
 
 #Demo Url
 https://www.screencast.com/t/bQahJ6kn
+
+##URL JSON Questions
+/home/RenderJsonQuestions
+JSON FORMATE
+[{ "type": "text", "label": "What is your name?" }, { "type": "radio", "label": "What is your gender?", "options": ["Male","Female"] }, { "type": "checkbox", "label": "Select all your hobbies", "options": ["Music","Movies","Sports"] } ]
